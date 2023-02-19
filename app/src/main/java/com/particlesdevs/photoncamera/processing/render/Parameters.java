@@ -17,12 +17,14 @@ import android.util.SizeF;
 import androidx.annotation.NonNull;
 
 import com.particlesdevs.photoncamera.app.PhotonCamera;
+import com.particlesdevs.photoncamera.pro.Devices;
 import com.particlesdevs.photoncamera.processing.parameters.FrameNumberSelector;
 import com.particlesdevs.photoncamera.settings.PreferenceKeys;
 import com.particlesdevs.photoncamera.capture.CaptureController;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -180,6 +182,9 @@ public class Parameters {
                 level.copyTo(blarr, 0);
                 for (int i = 0; i < 4; i++) blackLevel[i] = blarr[i];
             }
+
+        if (Devices.isA50())
+            Arrays.fill(blackLevel, 64.0f);
     }
 
 
@@ -195,6 +200,9 @@ public class Parameters {
         else {
             whitePoint = customNeutral;
         }
+        if (Devices.isA50())
+            Arrays.fill(whitePoint, 1.0f);
+
         int ref1 = characteristics.get(CameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1);
         int ref2;
         Object ref2obj = characteristics.get(CameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT2);
